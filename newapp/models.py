@@ -13,10 +13,10 @@ class Author(models.Model):
     # from django.contrib.auth.models import User
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    # рейтинг пользователя. Ниже будет дано описание того, как этот рейтинг можно посчитать.
+    # рейтинг пользователя
     ratingAuthor = models.SmallIntegerField(default=0)
 
-    # метод обновления рейтинга пользователя, суммаарный рейтинг пользователя за его посты
+    # метод обновления рейтинга пользователя, суммарный рейтинг пользователя за его посты
     # лайки и прочее
     def update_rating(self):
 
@@ -57,6 +57,7 @@ class Category(models.Model):
         return f'{self.name}'
 
 
+
 # Эта модель должна содержать в себе статьи и новости, которые создают пользователи.
 # Каждый объект может иметь одну или несколько категорий.
 class Post(models.Model):
@@ -76,14 +77,21 @@ class Post(models.Model):
     # автоматически добавляемая дата и время создания;
     dateCreation = models.DateTimeField(auto_now_add=True)
 
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null = True)
+
+
     # связь «многие ко многим» с моделью Category (с дополнительной моделью PostCategory);
-    postCategory = models.ManyToManyField(Category, through='postCategory')
+#    postCategory = models.ManyToManyField(Category, through='postCategory')
+
 
     # заголовок статьи/новости;
     title = models.CharField(max_length=128)
 
+
     # текст статьи/новости;
     text = models.TextField()
+
 
     # рейтинг статьи/новости
     # в данное поле мы сохраняем значение рейтинга, добавляя либо +1(лайк), либо -1 (дизлайк)
@@ -107,14 +115,15 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+
 # Промежуточная модель для связи «многие ко многим»:
-class PostCategory(models.Model):
+#class PostCategory(models.Model):
 
     # связь «один ко многим» с моделью Post;
-    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
+#    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     # связь «один ко многим» с моделью Category.
-    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
+#    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 # Под каждой новостью/статьей можно оставлять комментарии, поэтому
