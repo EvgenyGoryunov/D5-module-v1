@@ -18,7 +18,6 @@
     <input type="submit" value="Найти">
 </form>
 
-
 <br>
 <h1>Все новости и посты</h1>
 <!-- {{ value1 | Censor:"" }} -->
@@ -27,7 +26,8 @@
 {{ posts | length }}</h6>
 <!-- Выводим новости только, если они есть с помощью тега if -->
 {% if posts %}
-{% for post in posts %}
+<!-- поменяем posts на filter.qs, т. к. теперь мы забираем уже отобранную по каким-то параметрам информацию -->
+{% for post in filter.qs %}
 <br>
 новость №
 {{ post.pk }}
