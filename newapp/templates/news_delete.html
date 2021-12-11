@@ -1,6 +1,6 @@
 {% extends 'flatpages/default.html' %}
 
-{% block title %} Delete new {{ post }} {% endblock title %}
+{% block title %} Delete news {{ post }} {% endblock title %}
 
 
 {% block content %}
@@ -9,7 +9,7 @@
 
 <br>
     <h3>{{ post }}</h3>
-    <h6>{{ post.text | Censor:"" | truncatechars:150 }}</h6>
+    <h6>{{ post.text | truncatechars:150 }}</h6>
 <br>
     (новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
 <br>

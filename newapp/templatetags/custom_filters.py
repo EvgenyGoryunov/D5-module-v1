@@ -11,7 +11,7 @@ def Censor(value, arg):
     return value
 
 
-
+'''
 # прошлая версия, не используется
 @register.filter(name='Censor1')
 def Censor1(value, arg):  # первый аргумент здесь это то значение, к которому надо применить фильтр,
@@ -21,3 +21,5 @@ def Censor1(value, arg):  # первый аргумент здесь это то
         return arg   # возвращаемое функцией значение — это то значение, которое подставится к нам в шаблон
     else:
         return value
+
+'''

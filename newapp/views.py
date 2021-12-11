@@ -17,7 +17,6 @@ class PostsList(ListView):
     context_object_name = 'posts'  # это имя списка, в котором будут лежать все объекты, его надо указать, чтобы обратиться к самому списку объектов через HTML-шаблон
     ordering = ['-dateCreation']
     paginate_by = 1
-#    form_class = NewsForm   # добавляем форм класс, чтобы получать доступ к форме через метод POST
 
     def get_context_data(self, **kwargs):  # забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса
         context = super().get_context_data(**kwargs)
@@ -32,14 +31,14 @@ class NewsDetailView(DetailView):
 
 
 # дженерик для создания объекта. Надо указать только имя шаблона и класс формы, который мы написали в прошлом юните. Остальное он сделает за вас
-class NewsCreateView(CreateView):
+class NewsAddView(CreateView):
     template_name = 'news_add.html'
     form_class = NewsForm
 
 
 # РАЗБРАТЬСЯ С ДАННЫМ ШАБЛОНОМ ОН ПУСТ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!????????????????
 # дженерик для редактирования объекта
-class NewsUpdateView(UpdateView):
+class NewsEditView(UpdateView):
     template_name = 'news_edit.html'
     form_class = NewsForm
 
@@ -54,7 +53,7 @@ class NewsUpdateView(UpdateView):
 class NewsDeleteView(DeleteView):
     template_name = 'news_delete.html'
     queryset = Post.objects.all()
-    success_url = '/post/'
+    success_url = '/news/'  # после удаления нашей статьи нас будет перебрасывать по указанному адресу
 
 
 
