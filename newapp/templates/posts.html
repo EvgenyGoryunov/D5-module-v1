@@ -76,7 +76,7 @@
 <br>
 <hr>
 
-
+<!--
 <form method="POST">
     {% csrf_token %}
 
@@ -93,18 +93,23 @@
     <input name="title" type="text">
 
     <label for="text">Text</label>
-    <input name="text" type="text">
+    <input name="text" type="text">-->
 
-<!-- Здесь будет список категорий.  -->
+<!-- Здесь будет список категорий.
 <select name="author" size="4">
 {% for author in authors %}
 <option value="{{ author.id }}">
 {{ author.name }}
 </option>
 {% endfor %}
-</select>
+</select> -->
 
 
+<form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Добавить статью">
+</form>
 
 
     <!-- Здесь будет список категорий.  -->
@@ -114,11 +119,11 @@
             {{ Сategory.name }}
         </option>
       {% endfor %}
-    </select>-->
+    </select>
 
     <input type="submit" value="Добавить статью">
 
-</form>
+</form>-->
 
 <br>
 <hr>
