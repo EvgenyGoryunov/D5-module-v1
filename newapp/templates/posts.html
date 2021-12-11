@@ -4,14 +4,12 @@
 
 
 <!-- Название вкладки (строки в браузере)-->
-{% block title %}
--=NewsPortal CityTomsk=-
-{% endblock title %}
+{% block title %} -=NewsPortal CityTomsk=- {% endblock title %}
 
 
 {% block content %}
-
 <br>
+
 <!-- Перед таблицей добавим форму для поиска -->
 <form method="GET">
     {{ filter.form }} <!-- Форму от фильтров за нас сделает django. А вот кнопку, увы придётся делать самому -->
@@ -20,115 +18,81 @@
 
 <br>
 <h1>Все новости и посты</h1>
-<!-- {{ value1 | Censor:"" }} -->
 <br>
-<h6>Всего новостей
-{{ posts | length }}</h6>
-<!-- Выводим новости только, если они есть с помощью тега if -->
-{% if posts %}
+
 <!-- поменяем posts на filter.qs, т. к. теперь мы забираем уже отобранную по каким-то параметрам информацию -->
 {% for post in filter.qs %}
-<br>
-новость №
-{{ post.pk }} автор: {{ post.author }} категория: {{ post.category }}
-<h3>{{ post }}</h3>
-<br>
-{{ post.dateCreation }}
-<br>
-<br>
+    <br>
 
-{{ post.text | Censor:"" | truncatechars:150 }}
-<br>
-<hr>
+
+
+
+
+  <a href="{% url 'news_detail' post.id %}">{{ product.name|title }}</a>  <!--При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с самого товара -->
+   <a href="{% url 'news_update' post.id %}"><u>Редактировать</u></a>   <!--добавим ссылку на редактирование товара-->
+   <a href="{% url 'news_delete' post.id %}"><u> Удалить </u></a>   <!--добавим ссылку на удаление товара-->
+
+
+
+    <h3>{{ post }}</h3>
+    <h6>{{ post.text | Censor:"" | truncatechars:150 }}</h6>
+    <br>
+    (новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
+    <br>
+    <br>
+    <hr>
 {% endfor %}
 
-<!-- Если новостей нет, то говорим, что новостей нет -->
-{% else %}
-<h3>Новостей нет!</h3>
-{% endif %}
+
+<a href="{% url 'news_add' %}">Добавить новый пост</a> <br>
 
 <!-- Проверяем что поддерживается постраничный вывод -->
 {% if is_paginated %}
 
-    <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
-    {% if page_obj.has_previous %}
-        <a href="?page=1">First</a>
-        <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
-    {% endif %}
+<!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+{% if page_obj.has_previous %}
+<a href="?page=1">First</a>
+<a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+{% endif %}
 
-    <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
-    {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-            <a>{{ num }}</a>
-        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
-            <a href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-    {% endfor %}
+<!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a>{{ num }}</a>
+{% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+<a href="?page={{ num }}">{{ num }}</a>
+{% endif %}
+{% endfor %}
 
-    <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">>>></a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-    {% endif %}
+<!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">>>></a>
+<a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+{% endif %}
 {% endif %}
 <br>
 <hr>
 
+
+{% endblock content %}
+
+
+
+<!--
+
+
+
+
+
+
 <form method="POST">
     {% csrf_token %}
-    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    {{ form }}
     <input type="submit" value="Добавить статью">
 </form>
 
 <br>
 <hr>
-{% endblock content %}
 
 
-
-
-
-
-
-<!--
-<form method="POST">
-    {% csrf_token %}
-
-    <label for="author">Author</label>
-    <input name="author" type="text">
-
-    <label for="categoryType">CategoryType</label>
-    <input name="categoryType" type="text">
-
-    <label for="category">Category</label>
-    <input name="category" type="text">
-
-    <label for="title">Title</label>
-    <input name="title" type="text">
-
-    <label for="text">Text</label>
-    <input name="text" type="text">-->
-
-<!-- Здесь будет список категорий.
-<select name="author" size="4">
-{% for author in authors %}
-<option value="{{ author.id }}">
-{{ author.name }}
-</option>
-{% endfor %}
-</select> -->
-
-
-
-    <!-- Здесь будет список категорий.  -->
-   <!-- <select name="category" size="4">
-      {% for category in categories %}
-        <option value="{{ category.id }}">
-            {{ Сategory.name }}
-        </option>
-      {% endfor %}
-    </select>
-
-    <input type="submit" value="Добавить статью">
-
-</form>-->
+-->

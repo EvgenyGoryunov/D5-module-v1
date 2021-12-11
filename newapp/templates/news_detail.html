@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} The Best News: {{ post }} {% endblock title %}
+
+
+{% block content %}
+
+    <br>
+    <h3>{{ post }}</h3>
+    <h6>{{ post.text | Censor:"" | truncatechars:150 }}</h6>
+    <br>
+    (новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
+    <br>
+    <br>
+    <hr>
+
+{% endblock content %}
+
