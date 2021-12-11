@@ -30,7 +30,8 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'newapp'
+    'newapp',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -120,8 +121,9 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SITE_ID = 1
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+SITE_ID = 1
