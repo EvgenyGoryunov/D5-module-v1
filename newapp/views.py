@@ -19,7 +19,6 @@ class PostsList(ListView):
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
         return context
 
-
 '''
     model = Post  # указываем модель, объекты которой мы будем выводить
     template_name = 'posts.html'  # указываем имя шаблона, в котором будет лежать HTML,
