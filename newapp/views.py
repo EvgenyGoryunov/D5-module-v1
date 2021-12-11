@@ -24,6 +24,10 @@ class PostsList(ListView):
         return context
 
 
+
+
+
+
 # дженерик для получения деталей о товаре
 class NewsDetailView(DetailView):
     template_name = 'news_detail.html'
@@ -36,11 +40,12 @@ class NewsAddView(CreateView):
     form_class = NewsForm
     success_url = '/news/'
 
-# РАЗБРАТЬСЯ С ДАННЫМ ШАБЛОНОМ ОН ПУСТ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!????????????????
+
 # дженерик для редактирования объекта
 class NewsEditView(UpdateView):
     template_name = 'news_edit.html'
     form_class = NewsForm
+    success_url = '/news/'  # после редактирования нашей статьи нас будет перебрасывать по указанному адресу
 
     # метод get_object мы используем вместо queryset, чтобы получить информацию об объекте, который мы собираемся редактировать
     def get_object(self, **kwargs):
@@ -54,34 +59,3 @@ class NewsDeleteView(DeleteView):
     queryset = Post.objects.all()
     success_url = '/news/'  # после удаления нашей статьи нас будет перебрасывать по указанному адресу
 
-
-
-'''
-
-
-
-#        context['categories'] = Category.objects.all()
- #       context['form'] = NewsForm()
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
-        if form.is_valid():  # если пользователь ввёл всё правильно и нигде не ошибся, то сохраняем новый товар
-            form.save()
-        return super().get(request, *args, **kwargs)
-
-
-        # берём значения для нового товара из POST-запроса отправленного на сервер
-        author = request.POST['author']
-        categoryType = request.POST['categoryType']
-        category = request.POST['category']
-        title = request.POST['title']
-        text = request.POST['text']
-        news = Post(author=author, categoryType_id=categoryType, category=category, title=title, text=text)  # создаём новый товар и сохраняем
-        news.save()
-        return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос.
-
-
-
-
-
-'''

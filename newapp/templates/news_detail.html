@@ -5,14 +5,16 @@
 
 {% block content %}
 
-    <br>
-    <h3>{{ post }}</h3>
-    <h6>{{ post.text | truncatechars:150 }}</h6>
-    <br>
-    (новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
-    <br>
-    <br>
-    <hr>
+<br>
+<h3>{{ post }}</h3>
+<br>
+{{ post.text }}
+<br>
+<br>
+(новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
+<br>
+<br>
+<hr>
 
 {% endblock content %}
 

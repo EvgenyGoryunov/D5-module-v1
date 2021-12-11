@@ -4,8 +4,9 @@
 
 
 {% block content %}
+<br>
 
-<h2>Вы действительно хотите удалить данную новость?</h2>
+<h3>Вы действительно хотите удалить новость?</h3>
 
 <br>
     <h3>{{ post }}</h3>
@@ -19,7 +20,7 @@
 <form method="POST">
     {% csrf_token %}
     {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
-    <input type="submit" value="подтвердить">
+    <input type="submit" value="Удалить">
 </form>
 
 {% endblock content %}

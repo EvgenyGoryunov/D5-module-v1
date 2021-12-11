@@ -16,34 +16,31 @@
 </form>
 
 <br>
+<br>
 <h1>Все новости и посты</h1>
 <br>
 
-<!-- поменяем posts на filter.qs, т. к. теперь мы забираем уже отобранную по каким-то параметрам информацию -->
+
 {% for post in filter.qs %}
-    <br>
+<br>
 
+<h3>{{ post }}</h3>
+<br>
+<h6>{{ post.text | truncatechars:150 }}</h6>
+<br>
 
+(новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
 
+<br>
+<a href="{% url 'news_detail' post.id %}"><u>Подробнее</u></a>  <!-- При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с самого товара -->
+<a href="{% url 'news_edit' post.id %}"><u>Редактировать</u></a>   <!--добавим ссылку на редактирование товара-->
+<a href="{% url 'news_delete' post.id %}"><u>Удалить</u></a>   <!--добавим ссылку на удаление товара-->
+<br>
+<br>
+<hr>
 
-
-<!--  <a href="{% url 'news_detail' post.id %}">{{ post.name|title }}</a>  При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с самого товара -->
-<!--   <a href="{% url 'news_edit' post.id %}"><u>Редактировать</u></a>   добавим ссылку на редактирование товара-->
-<!--   <a href="{% url 'news_delete' post.id %}"><u> Удалить </u></a>   добавим ссылку на удаление товара-->
-
-
-
-    <h3>{{ post }}</h3>
-    <h6>{{ post.text | Censor:"" | truncatechars:150 }}</h6>
-    <br>
-    (новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}; дата создания: {{ post.dateCreation }})
-    <br>
-    <br>
-    <hr>
 {% endfor %}
 
-
-<a href="{% url 'news_add' %}">Добавить новый пост</a> <br>
 
 <!-- Проверяем что поддерживается постраничный вывод -->
 {% if is_paginated %}
@@ -72,26 +69,4 @@
 <br>
 <hr>
 
-
 {% endblock content %}
-
-
-
-<!--
-
-
-
-
-
-
-<form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Добавить статью">
-</form>
-
-<br>
-<hr>
-
-
--->
