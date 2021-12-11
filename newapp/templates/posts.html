@@ -30,15 +30,7 @@
 {% for post in filter.qs %}
 <br>
 новость №
-{{ post.pk }}
-<br>
-<br>
-автор: {{ post.author }}
-<br>
-<br>
-категория: {{ post.category }}
-<br>
-<br>
+{{ post.pk }} автор: {{ post.author }} категория: {{ post.category }}
 <h3>{{ post }}</h3>
 <br>
 {{ post.dateCreation }}
@@ -79,7 +71,55 @@
         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
     {% endif %}
 
+
+{% endif %}
 <br>
 <hr>
-{% endif %}
+
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="author">Author</label>
+    <input name="author" type="text">
+
+    <label for="categoryType">CategoryType</label>
+    <input name="categoryType" type="text">
+
+    <label for="category">Category</label>
+    <input name="category" type="text">
+
+    <label for="title">Title</label>
+    <input name="title" type="text">
+
+    <label for="text">Text</label>
+    <input name="text" type="text">
+
+<!-- Здесь будет список категорий.  -->
+<select name="author" size="4">
+{% for author in authors %}
+<option value="{{ author.id }}">
+{{ author.name }}
+</option>
+{% endfor %}
+</select>
+
+
+
+
+    <!-- Здесь будет список категорий.  -->
+   <!-- <select name="category" size="4">
+      {% for category in categories %}
+        <option value="{{ category.id }}">
+            {{ Сategory.name }}
+        </option>
+      {% endfor %}
+    </select>-->
+
+    <input type="submit" value="Добавить статью">
+
+</form>
+
+<br>
+<hr>
 {% endblock content %}

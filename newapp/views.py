@@ -20,6 +20,18 @@ class PostsList(ListView):
         return context
 
 
+    def post(self, request, *args, **kwargs):
+        # берём значения для нового товара из POST-запроса отправленного на сервер
+        author = request.POST['author']
+        categoryType = request.POST['categoryType']
+        category = request.POST['category']
+        title = request.POST['title']
+        text = request.POST['text']
+        news = Post(author=author, categoryType_id=categoryType, category=category, title=title, text=text)  # создаём новый товар и сохраняем
+        news.save()
+        return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос.
+
+
 '''
     model = Post  # указываем модель, объекты которой мы будем выводить
     template_name = 'posts.html'  # указываем имя шаблона, в котором будет лежать HTML,

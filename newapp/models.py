@@ -3,7 +3,6 @@ from django.db import models
 from django.db.models import Sum
 from django.core.validators import MinValueValidator
 
-
 # Модель, содержащая объекты всех авторов.
 # Имеет следующие поля:
 class Author(models.Model):
@@ -27,7 +26,6 @@ class Author(models.Model):
         pRat = 0
         pRat += postRat.get('postRating')
 
-
         # для комментов суммирование рейтинга, мы суммируем поле 'rating' класс Comment
         # так как "commentPost = models.ForeignKey", в связь добавится "authorUser"
         commentRat = self.authorUser.comment_set.aggregate(commentRating=Sum('rating'))
@@ -43,7 +41,6 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.authorUser}'
 
-
 # Категории новостей/статей — темы, которые они отражают (спорт, политика,образование и т. д.).
 class Category(models.Model):
 
@@ -55,8 +52,6 @@ class Category(models.Model):
     #  функция, которая говорит, как лучше вывести объект в админ панель
     def __str__(self):
         return f'{self.name}'
-
-
 
 # Эта модель должна содержать в себе статьи и новости, которые создают пользователи.
 # Каждый объект может иметь одну или несколько категорий.
@@ -77,21 +72,16 @@ class Post(models.Model):
     # автоматически добавляемая дата и время создания;
     dateCreation = models.DateTimeField(auto_now_add=True)
 
-
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null = True)
-
 
     # связь «многие ко многим» с моделью Category (с дополнительной моделью PostCategory);
 #    postCategory = models.ManyToManyField(Category, through='postCategory')
 
-
     # заголовок статьи/новости;
     title = models.CharField(max_length=128)
 
-
     # текст статьи/новости;
     text = models.TextField()
-
 
     # рейтинг статьи/новости
     # в данное поле мы сохраняем значение рейтинга, добавляя либо +1(лайк), либо -1 (дизлайк)
@@ -115,7 +105,6 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-
 # Промежуточная модель для связи «многие ко многим»:
 #class PostCategory(models.Model):
 
@@ -124,7 +113,6 @@ class Post(models.Model):
 
     # связь «один ко многим» с моделью Category.
 #    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
-
 
 # Под каждой новостью/статьей можно оставлять комментарии, поэтому
 # необходимо организовать их способ хранения.
