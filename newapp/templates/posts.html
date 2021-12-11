@@ -70,11 +70,25 @@
         <a href="?page={{ page_obj.next_page_number }}">>>></a>
         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
     {% endif %}
-
-
 {% endif %}
 <br>
 <hr>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Добавить статью">
+</form>
+
+<br>
+<hr>
+{% endblock content %}
+
+
+
+
+
+
 
 <!--
 <form method="POST">
@@ -105,12 +119,6 @@
 </select> -->
 
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
-    <input type="submit" value="Добавить статью">
-</form>
-
 
     <!-- Здесь будет список категорий.  -->
    <!-- <select name="category" size="4">
@@ -124,7 +132,3 @@
     <input type="submit" value="Добавить статью">
 
 </form>-->
-
-<br>
-<hr>
-{% endblock content %}
