@@ -34,7 +34,7 @@ class NewsDetailView(DetailView):
 class NewsAddView(CreateView):
     template_name = 'news_add.html'
     form_class = NewsForm
-
+    success_url = '/news/'
 
 # РАЗБРАТЬСЯ С ДАННЫМ ШАБЛОНОМ ОН ПУСТ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!????????????????
 # дженерик для редактирования объекта
@@ -48,7 +48,6 @@ class NewsEditView(UpdateView):
         return Post.objects.get(pk=id)
 
 
-# РАЗБРАТЬСЯ С success_url = '/post/'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!??????????????????
 # дженерик для удаления товара
 class NewsDeleteView(DeleteView):
     template_name = 'news_delete.html'
