@@ -3,9 +3,9 @@
 {% block title %} News add {{ post }} {% endblock title %}
 
 {% block content %}
-
+<br>
 <h3>Создать новую статью</h3>
-
+<br>
 <form method="POST">
     {% csrf_token %}
     {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->

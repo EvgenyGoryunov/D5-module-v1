@@ -108,15 +108,6 @@ class Post(models.Model):
     def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с новостями
         return f'/news/{self.id}'
 
-# Промежуточная модель для связи «многие ко многим»:
-#class PostCategory(models.Model):
-
-    # связь «один ко многим» с моделью Post;
-#    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-    # связь «один ко многим» с моделью Category.
-#    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
-
 # Под каждой новостью/статьей можно оставлять комментарии, поэтому
 # необходимо организовать их способ хранения.
 class Comment(models.Model):
@@ -149,3 +140,15 @@ class Comment(models.Model):
     #  функция, которая говорит, как лучше вывести объект в админ панель
     def __str__(self):
         return f'{self.commentUser}: {self.text[:20]}'
+
+
+
+
+# Промежуточная модель для связи «многие ко многим»:
+#class PostCategory(models.Model):
+
+    # связь «один ко многим» с моделью Post;
+#    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    # связь «один ко многим» с моделью Category.
+#    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'flatpages/default.html' %}
 
-</body>
-</html>
+{% block title %} -=NewsPortal CityTomsk=- {% endblock title %}
+
+
+
+{% block content %}
+<br>
+
+<!-- Перед таблицей добавим форму для поиска-->
+<form method="GET">
+    {{ filter.form }} <!--Форму от фильтров за нас сделает django. А вот кнопку, увы придётся делать самому-->
+    <input type="submit" value="Найти">
+</form>
+
+<br>
+
+
+
+
+
+
+{% endblock content %}

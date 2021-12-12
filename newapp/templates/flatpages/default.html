@@ -33,12 +33,17 @@
                        <li class="nav-item active">
 
                        <li class="nav-item">
-                           <a class="nav-link" href="http://127.0.0.1:8000/news">AllNews</a>
+                            <a class="nav-link" href="http://127.0.0.1:8000/news">AllNews</a>
                        </li>
 
                        <li class="nav-item">
-                           <a class="nav-link" href="{% url 'news_add' %}">AddNews</a>
+                            <a class="nav-link" href="{% url 'news_add' %}">AddNews</a>
                        </li>
+
+                       <li class="nav-item">
+                            <a class="nav-link" href="{% url 'news_search' %}">SearchNews</a>
+                       </li>
+
 
 
                    </ul>

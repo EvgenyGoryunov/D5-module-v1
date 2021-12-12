@@ -25,7 +25,11 @@ class PostsList(ListView):
 
 
 
-
+# дженерик для поиска постов
+class NewsSearchView(CreateView):
+    template_name = 'news_search.html'
+    form_class = NewsForm
+    success_url = '/search/'
 
 
 # дженерик для получения деталей о товаре
@@ -53,7 +57,7 @@ class NewsEditView(UpdateView):
         return Post.objects.get(pk=id)
 
 
-# дженерик для удаления товара
+# дженерик для удаления новости
 class NewsDeleteView(DeleteView):
     template_name = 'news_delete.html'
     queryset = Post.objects.all()
