@@ -1,10 +1,10 @@
 {% extends 'flatpages/default.html' %}
 
-{% block title %} News add {{ post }} {% endblock title %}
+{% block title %} Add News {{ post }} {% endblock title %}
 
 {% block content %}
 <br>
-<h3>Создать новую статью</h3>
+<h3>Создать новость</h3>
 <br>
 <form method="POST">
     {% csrf_token %}
