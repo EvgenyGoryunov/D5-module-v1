@@ -28,6 +28,7 @@ class Author(models.Model):
     # рейтинг пользователя
     ratingAuthor = models.SmallIntegerField(default=0)
 
+
     # метод обновления рейтинга пользователя, суммарный рейтинг пользователя за его посты
     # лайки и прочее
     def update_rating(self):
