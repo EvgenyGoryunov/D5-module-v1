@@ -3,6 +3,19 @@ from django.db import models
 from django.db.models import Sum
 from django.core.validators import MinValueValidator
 
+
+
+
+# from django.http import request
+# current_user = request.user
+# if current_user.is_authenticated:
+#     qaz = 'pass'
+# else:
+#     qaz = 'ne rabotaet'
+
+
+
+
 # Модель, содержащая объекты всех авторов.
 # Имеет следующие поля:
 class Author(models.Model):
