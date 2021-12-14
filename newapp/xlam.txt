@@ -1,3 +1,12 @@
+from .views.py
+# from datetime import datetime
+# from django.shortcuts import render
+# from django.views import View  # импортируем простую вьюшку
+# from django.core.paginator import Paginator  # импортируем класс, позволяющий удобно осуществлять постраничный вывод
+# from django.views.generic import ListView
+# from django.forms import ModelForm, BooleanField  # Импортируем true-false поле
+
+
 
 <!--{% load custom_filters %}-->
 

@@ -1,14 +1,27 @@
-from datetime import datetime
-from django.shortcuts import render
-from django.views import View  # импортируем простую вьюшку
-from django.core.paginator import Paginator  # импортируем класс, позволяющий удобно осуществлять постраничный вывод
-from django.views.generic import ListView
 from .models import Author, Category, Post, Comment
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView  # импортируем необходимые дженерики
-
-from django.forms import ModelForm, BooleanField  # Импортируем true-false поле
 from .filters import NewsFilter  # импортируем написанный нами фильтр (с файла filters.py)
 from .forms import NewsForm
+
+# модуль Д5 импорты
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+class ProtectedView(LoginRequiredMixin, TemplateView):
+    template_name = 'protected_page.html'
+
+
+# class ProtectedView(LoginRequiredMixin, TemplateView):
+#     template_name = 'protected_page.html'
+#
+#     @method_decorator(login_required)
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
+
 
 
 class NewsList(ListView):
@@ -22,20 +35,6 @@ class NewsList(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
         return context
-
-'''
-class PostsList(ListView):
-    model = Post  # указываем модель, объекты которой мы будем выводить
-    template_name = 'posts.html'  # указываем имя шаблона, в котором будет лежать HTML, в котором будут все инструкции о том, как именно пользователю должны вывестись наши объекты
-    context_object_name = 'posts'  # это имя списка, в котором будут лежать все объекты, его надо указать, чтобы обратиться к самому списку объектов через HTML-шаблон
-    ordering = ['-dateCreation']
-    paginate_by = 1
-
-    def get_context_data(self, **kwargs):  # забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса
-        context = super().get_context_data(**kwargs)
-        context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
-        return context
-'''
 
 
 # дженерик для поиска постов
@@ -51,8 +50,6 @@ class NewsSearch(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
         return context
-
-
 
 
 # дженерик для получения деталей о товаре
