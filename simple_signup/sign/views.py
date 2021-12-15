@@ -2,10 +2,29 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from .models import BaseRegisterForm
 
-# представлений реализуем Create-дженерик, расширим стандартную форму, добавив другие значимые поля:
-# электронная почта; имя; фамилия нового пользователя, так как базовая форма джанги имеет только
-# поле username и два поля для пароля — сам пароль и его подтверждение, этого мало
+
 class BaseRegisterView(CreateView):
     model = User
     form_class = BaseRegisterForm
     success_url = '/'
+
+
+
+# одно view для апгрейда аккаунта до Premium - для добавления в группу premium. Для данной задачи не существует
+# дженерика, а писать класс-представление для такой задачи избыточно, поэтому напишем функцию-представление.
+from django.shortcuts import redirect
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required
+
+
+# Получили объект текущего пользователя из переменной запроса. Вытащили premium-группу из модели Group.
+# Дальше проверяем, находится ли пользователь в этой группе (вдруг кто-то решил перейти по этому URL, уже имея
+# Premium). И если он не в группе — добавляем. В конце перенаправляем пользователя на корневую страницу,
+# используя метод redirect. Далее берем кнопку с этой функцией
+@login_required
+def upgrade_me(request):
+    user = request.user
+    premium_group = Group.objects.get(name='premium')
+    if not request.user.groups.filter(name='premium').exists():
+        premium_group.user_set.add(user)
+    return redirect('/')
