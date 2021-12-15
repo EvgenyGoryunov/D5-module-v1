@@ -3,7 +3,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -16,7 +15,6 @@ DEBUG = True
 # добавили локальный адрес нашего сервера
 ALLOWED_HOSTS = ['127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -27,9 +25,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-# добавить созданные нами приложения
     'sign',
     'protect',
+
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -47,12 +52,8 @@ ROOT_URLCONF = 'simple_signup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # если возникнет ошибка, то импортировать след строчки
-        # import os
-        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-# настройка указывает Django искать шаблоны в соответствующей директории
-# все шаблоны будут храниться в папке templates корневой директории
-        'DIRS': [BASE_DIR/'templates'],
+        # 'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,15 +66,23 @@ TEMPLATES = [
     },
 ]
 
+# необходимо добавить бэкенды аутентификации: встроенный бэкенд Django, реализующий аутентификацию по username, а также
+# бэкенд аутентификации, предоставленный пакетом allauth. Грубо говоря, нам нужно «включить» аутентификацию как
+# по username, так и специфичную по email или сервис-провайдеру.
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of allauth
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 # переменные в файле настроек служат для конкретизации URL-адреса, на котором находится страница аутентификации
-LOGIN_URL = 'sign/login/'
+# LOGIN_URL = 'sign/login/'
+LOGIN_URL = '/accounts/login/'
 # страница, на которую перенаправляется пользователь после успешного входа на сайт, в данном случае корневая страница сайта
 LOGIN_REDIRECT_URL = '/'
 
-
-
 WSGI_APPLICATION = 'simple_signup.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -84,7 +93,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -104,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -116,7 +123,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -127,3 +133,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SITE_ID = 1
+
+# Первые два указывают на то, что поле email является обязательным и уникальным, а третий, наоборот, говорит,
+# что username теперь необязательный. Следующий параметр указывает, что аутентификация будет происходить
+# посредством электронной почты. Напоследок мы указываем, что верификация почты отсутствует. Обычно на почту
+# отправляется подтверждение аккаунта, после подтверждения которого восстанавливается полная функциональность
+# учетной записи. Для тестового примера нам не обязательно это делать.
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
