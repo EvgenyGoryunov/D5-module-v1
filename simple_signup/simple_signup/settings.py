@@ -52,8 +52,8 @@ ROOT_URLCONF = 'simple_signup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [BASE_DIR / 'templates'],
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'], # должна быть указана, где брать шаблоны для страниц, иначе ошибка будет (страница не найдена 404 или 500)
+        # 'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
