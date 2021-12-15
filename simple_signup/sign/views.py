@@ -28,3 +28,20 @@ def upgrade_me(request):
     if not request.user.groups.filter(name='premium').exists():
         premium_group.user_set.add(user)
     return redirect('/')
+
+
+
+# Предоставление прав пользователям
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views import View
+class MyView(PermissionRequiredMixin, View):
+    permission_required = ('<app>.<action>_<model>',
+                           '<app>.<action>_<model>')
+
+from django.views.generic.edit import CreateView
+class AddProduct(PermissionRequiredMixin, CreateView):
+    permission_required = ('shop.add_product',)
+        # // customize form view
+# Если пользователь, который вызвал это представление относится к группе content-manager и для нее предоставлено
+# это право, то представление выполнится, как и планировалось. Если же пользователь таких прав не имеет, то Django
+# выбросит исключение PermissionDenied и пользователя перенаправит на страницу с ошибкой 403

@@ -8,7 +8,9 @@ from django import forms
 # электронная почта; имя; фамилия нового пользователя, так как базовая форма джанги имеет только
 # поле username и два поля для пароля — сам пароль и его подтверждение
 class BaseRegisterForm(UserCreationForm):
-    email = forms.EmailField(label = "Email")  # label = "Email" - эта фраза означает, что пока поле пустое, и мы еще не ввели в него свои данные, в поле будет отображаться слово "Email"
+# label = "Email" - эта фраза означает, что пока поле пустое, и мы еще не ввели в него свои данные,
+# в поле будет отображаться слово "Email"
+    email = forms.EmailField(label = "Email")
     first_name = forms.CharField(label = "Имя")
     last_name = forms.CharField(label = "Фамилия")
 
