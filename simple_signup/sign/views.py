@@ -30,7 +30,6 @@ def upgrade_me(request):
     return redirect('/')
 
 
-
 # Предоставление прав пользователям
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views import View
