@@ -3,26 +3,6 @@ from django.views.generic import ListView, UpdateView, CreateView, DetailView, D
 from .filters import NewsFilter  # импортируем написанный нами фильтр (с файла filters.py)
 from .forms import NewsForm
 
-# модуль Д5 импорты
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-
-class ProtectedView(LoginRequiredMixin, TemplateView):
-    template_name = 'protected_page.html'
-
-
-# class ProtectedView(LoginRequiredMixin, TemplateView):
-#     template_name = 'protected_page.html'
-#
-#     @method_decorator(login_required)
-#     def dispatch(self, *args, **kwargs):
-#         return super().dispatch(*args, **kwargs)
-
-
 
 class NewsList(ListView):
     model = Post  # указываем модель, объекты которой мы будем выводить
