@@ -53,7 +53,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'], # должна быть указана, где брать шаблоны для страниц, иначе ошибка будет (страница не найдена 404 или 500)
-        # 'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,3 +144,6 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Чтобы allauth распознал нашу форму как ту, что должна выполняться вместо формы по умолчанию
+ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
