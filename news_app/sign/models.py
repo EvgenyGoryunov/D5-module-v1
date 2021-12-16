@@ -5,10 +5,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-# форму, с помощью которой мы будем создавать нового пользователя
+# форма, с помощью которой мы будем создавать нового пользователя
 # представлений реализуем Create-дженерик, расширим стандартную форму, добавив другие значимые поля:
 # электронная почта; имя; фамилия нового пользователя, так как базовая форма джанги имеет только
 # поле username и два поля для пароля — сам пароль и его подтверждение
+
 class BaseRegisterForm(UserCreationForm):
     email = forms.EmailField(label="Email")
     first_name = forms.CharField(label="Имя")

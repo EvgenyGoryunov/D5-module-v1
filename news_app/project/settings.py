@@ -26,15 +26,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # приложения для модуля Д4
+    # приложения для модуля Д1-3
     'django.contrib.sites',
     'django.contrib.flatpages',
+
+    # приложения для модуля Д4
     'newapp',
-    'django_filters',
+    'django_filters',  # чтоб фильтра поддерживались нужно устанавливать
 
     # приложения для модуля Д5
     'sign',
     'protect',
+
+    # чтоб возможно было авторизоваться через сторонние сервисы, такие как гугл, мы устанавливаем
+    # дополнительный пакет pip install django-allauth и прописываем все приложения в данном файле
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +69,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                # требуется удостовериться, что в конфигурации шаблонов присутствует контекстный процессор
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -125,12 +135,42 @@ STATICFILES_DIRS = [
     BASE_DIR / "newapp/static"
 ]
 
+# используется в случае, если данный проект управляет несколькими сайтами, но для нас сейчас это не является
+# принципиальным. Достаточно явно прописать значение 1 для этой переменной.
 SITE_ID = 1
-
 
 # для модуля Д5
 # Django перенаправляет неавторизованных пользователей на страницу входа, указанного по данному пути
-LOGIN_URL = 'sign/login/'
+# LOGIN_URL = 'sign/login/'
+
+# Чтобы возможно было авторизоваться через сторонние сервисы, такие как гугл
+LOGIN_URL = '/accounts/login/'
 
 # При корректных данных для входа пользователь перенаправляется на страницу, указанною по данному пути
+# страница, куда перенаправляется пользователь после успешного входа на сайт, в данном случае корневая страница сайта
 LOGIN_REDIRECT_URL = '/'
+
+# модуль Д5, чтоб можно было авторизоваться через сторонние сервисы, грубо говоря, нам нужно «включить»
+# аутентификацию как по username, так и специфичную по email или сервис-провайдеру
+AUTHENTICATION_BACKENDS = [
+
+    # добавить бэкенды аутентификации: встроенный бэкенд Django, реализующий аутентификацию по username
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # бэкенд аутентификации, предоставленный пакетом allauth
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+# Первые два указывают на то, что поле email является обязательным и уникальным, а третий, наоборот, говорит,
+# что username теперь необязательный. Следующий параметр указывает, что аутентификация будет происходить
+# посредством электронной почты. Напоследок мы указываем, что верификация почты отсутствует. Обычно на почту
+# отправляется подтверждение аккаунта, после подтверждения которого восстанавливается полная функциональность
+# учетной записи. Для тестового примера нам не обязательно это делать.
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'

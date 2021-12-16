@@ -3,6 +3,8 @@ from django.urls import path, include
 
 urlpatterns = [
 
+    # Модуль Д5
+
     # при переходе по адресу http://127.0.0.1:8000/admin/ будет запускаться приложение admin.site.urls,
     # (панель администратора в нашем случае)
     path('admin/', admin.site.urls),
@@ -18,12 +20,15 @@ urlpatterns = [
     # пользователь либо заходит на сайт (проходит идентификацию, аутентификацию и авторизацию), либо создает с нуля
     # свой профиль (то есть регистрируется) и затем заходит. После успешных действий перебрасывается в приложения ниже,
     # данное приложение оно главное, приложение protect, просто для примера
-    path('sign/', include('sign.urls'))
+    path('sign/', include('sign.urls')),
+
+
+    # так как в настройках проекта мы указали LOGIN_URL = '/accounts/login/', чтоб можно было со сторонних сервисов
+    # авторизоваться здесь делаем переадресацию на приложение allauth.urls
+    path('accounts/', include('allauth.urls')),
+
+    # Модуль Д4, осталось без изменений
+    path('pages/', include('django.contrib.flatpages.urls')),
+    path('news/', include('newapp.urls')),
+
 ]
-
-# осталось с модуля Д4
-# path('pages/', include('django.contrib.flatpages.urls')),
-# path('news/', include('newapp.urls')),
-
-
-
