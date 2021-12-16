@@ -1,10 +1,8 @@
 import os
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -18,7 +16,6 @@ DEBUG = True
 # Модуль Д5
 ALLOWED_HOSTS = ['127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -29,12 +26,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # приложения для модуля Д4
     'django.contrib.sites',
     'django.contrib.flatpages',
     'newapp',
     'django_filters',
 
-    # новые приложения для модуля Д5
+    # приложения для модуля Д5
     'sign',
     'protect',
 ]
@@ -53,10 +51,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'project.urls'
 
+# это все, что относится по части шаблонов
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # путь, где лежат нами созданные шаблоны
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -81,7 +79,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -101,7 +98,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -115,7 +111,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -126,7 +121,6 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 STATICFILES_DIRS = [
     BASE_DIR / "newapp/static"
 ]
@@ -135,5 +129,8 @@ SITE_ID = 1
 
 
 # для модуля Д5
+# Django перенаправляет неавторизованных пользователей на страницу входа, указанного по данному пути
 LOGIN_URL = 'sign/login/'
+
+# При корректных данных для входа пользователь перенаправляется на страницу, указанною по данному пути
 LOGIN_REDIRECT_URL = '/'
