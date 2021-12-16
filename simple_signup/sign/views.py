@@ -9,7 +9,6 @@ class BaseRegisterView(CreateView):
     success_url = '/'
 
 
-
 # одно view для апгрейда аккаунта до Premium - для добавления в группу premium. Для данной задачи не существует
 # дженерика, а писать класс-представление для такой задачи избыточно, поэтому напишем функцию-представление.
 from django.shortcuts import redirect
