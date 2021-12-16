@@ -1,25 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Sum
-from django.core.validators import MinValueValidator
 
 
-
-
-# from django.http import request
-# current_user = request.user
-# if current_user.is_authenticated:
-#     qaz = 'pass'
-# else:
-#     qaz = 'ne rabotaet'
-
-
-
-
-# Модель, содержащая объекты всех авторов.
-# Имеет следующие поля:
+# Модель, содержащая объекты всех авторов и имеет следующие поля:
 class Author(models.Model):
-
     # cвязь «один к одному» с встроенной моделью пользователей User;
     # когда имеем отношение ко встроенной модели, ее нужно импортировать из джанго
     # from django.contrib.auth.models import User
@@ -28,11 +13,9 @@ class Author(models.Model):
     # рейтинг пользователя
     ratingAuthor = models.SmallIntegerField(default=0)
 
-
     # метод обновления рейтинга пользователя, суммарный рейтинг пользователя за его посты
     # лайки и прочее
     def update_rating(self):
-
         # вместо цикла for можно реализовать сбор данных таким образом
         # aggregate, происходит сбор всех данных определенного поля данного пользователя
         # мы суммируем поле 'rating' класс Post
@@ -55,9 +38,9 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.authorUser}'
 
+
 # Категории новостей/статей — темы, которые они отражают (спорт, политика,образование и т. д.).
 class Category(models.Model):
-
     # Имеет единственное поле: название категории. Поле должно быть уникальным
     # (в определении поля необходимо написать параметр unique = True).
     # максимальную длину строки берут как правило в н-ой степени, 2,4,8,16,32...128,256
@@ -67,10 +50,10 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
 # Эта модель должна содержать в себе статьи и новости, которые создают пользователи.
 # Каждый объект может иметь одну или несколько категорий.
 class Post(models.Model):
-
     # связь «один ко многим» с моделью Author;
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
@@ -86,10 +69,10 @@ class Post(models.Model):
     # автоматически добавляемая дата и время создания;
     dateCreation = models.DateTimeField(auto_now_add=True)
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null = True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
     # связь «многие ко многим» с моделью Category (с дополнительной моделью PostCategory);
-#    postCategory = models.ManyToManyField(Category, through='postCategory')
+    #    postCategory = models.ManyToManyField(Category, through='postCategory')
 
     # заголовок статьи/новости;
     title = models.CharField(max_length=128)
@@ -119,13 +102,14 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-    def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с новостями
+    # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с новостями
+    def get_absolute_url(self):
         return f'/news/{self.id}'
+
 
 # Под каждой новостью/статьей можно оставлять комментарии, поэтому
 # необходимо организовать их способ хранения.
 class Comment(models.Model):
-
     # связь «один ко многим» с моделью Post;
     commentPost = models.ForeignKey(Post, on_delete=models.CASCADE)
 
@@ -155,14 +139,13 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.commentUser}: {self.text[:20]}'
 
-
-
+# Осталось с прошлой жизни код, храню на всякий случай
 
 # Промежуточная модель для связи «многие ко многим»:
-#class PostCategory(models.Model):
+# class PostCategory(models.Model):
 
-    # связь «один ко многим» с моделью Post;
+# связь «один ко многим» с моделью Post;
 #    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    # связь «один ко многим» с моделью Category.
+# связь «один ко многим» с моделью Category.
 #    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)

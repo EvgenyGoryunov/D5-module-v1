@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import NewsList, NewsDetailView, NewsAddView, NewsEditView, NewsDeleteView, NewsSearch
 
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit/<int:pk>', NewsEditView.as_view(), name='news_edit'),
     path('delete/<int:pk>', NewsDeleteView.as_view(), name='news_delete'),
     path('search/', NewsSearch.as_view(), name='news_search'),
+    # path('userr/', include('project.urls'), name='userr')
 ]

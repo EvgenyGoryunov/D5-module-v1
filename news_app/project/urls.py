@@ -22,12 +22,12 @@ urlpatterns = [
     # данное приложение оно главное, приложение protect, просто для примера
     path('sign/', include('sign.urls')),
 
-
     # так как в настройках проекта мы указали LOGIN_URL = '/accounts/login/', чтоб можно было со сторонних сервисов
     # авторизоваться здесь делаем переадресацию на приложение allauth.urls
     path('accounts/', include('allauth.urls')),
 
     # Модуль Д4, осталось без изменений
+
     path('pages/', include('django.contrib.flatpages.urls')),
     path('news/', include('newapp.urls')),
 

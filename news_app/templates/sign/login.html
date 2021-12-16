@@ -11,7 +11,8 @@
 <!--блок содержания данной страницы-->
 {% block content %}
 <h2> Войти в систему </h2>
-
+(шаблон templates\sign\login.html)
+<hr>
 <!--форма отправки введенных данных от пользователя-->
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}

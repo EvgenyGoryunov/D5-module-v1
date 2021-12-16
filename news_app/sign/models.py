@@ -11,10 +11,10 @@ from django.contrib.auth.models import User
 # поле username и два поля для пароля — сам пароль и его подтверждение
 
 class BaseRegisterForm(UserCreationForm):
+    # label = "Email" - эта фраза означает, как будет именоваться данное поле на нашей форме, слева от поля
     email = forms.EmailField(label="Email")
     first_name = forms.CharField(label="Имя")
     last_name = forms.CharField(label="Фамилия")
-    # label = "Email" - эта фраза означает, как будет именоваться данное поле на нашей форме
 
     class Meta:
         model = User
@@ -23,13 +23,14 @@ class BaseRegisterForm(UserCreationForm):
                   "last_name",
                   "email",
                   "password1",
-                  "password2",)
-
+                  "password2")
 
 
 # импортировали класс формы, который предоставляет allauth
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
+
+
 #  В общем с приложения allauth.account.forms взяли форму SignupForm (базовая, стандартная форма), но в итоге сделаем
 #  так, что при нажатии кнопки SignUp (регистрация = передача данных в базу User, то есть создание нового пользователя)
 #  мы подвязываем дополнительную свою логику, которая внесет нового пользователя в нужную нам группу (базовую),
@@ -45,7 +46,7 @@ class BasicSignupForm(SignupForm):
         # были выполнены
         user = super(BasicSignupForm, self).save(request)
         # Важно!!! Переменная basic_group (ниже), аргумент name='basic' должен соответствовать названию группы в джанге
-        basic_group = Group.objects.get(name='basic')
+        basic_group = Group.objects.get(name='common')
         # через атрибут user_set, возвращающий список всех пользователей этой группы, мы добавляем нового
         # пользователя в эту группу
         basic_group.user_set.add(user)

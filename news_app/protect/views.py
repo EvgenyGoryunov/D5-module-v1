@@ -22,5 +22,5 @@ class IndexView(LoginRequiredMixin, TemplateView):
         # вернет True, если группа premium в списке групп пользователя найдена, иначе — False,# в нашем случае нужно получить
         # наоборот — True, если пользователь не находится в этой группе, поэтому добавляем отрицание not, и возвращаем контекст
         # Важно filter(name = 'premium') чтоб группы совпадали 'premium' тут = премиум в джанге
-        context['is_not_premium'] = not self.request.user.groups.filter(name='premium').exists()
+        context['is_not_premium'] = not self.request.user.groups.filter(name='authors').exists()
         return context

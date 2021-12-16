@@ -23,10 +23,10 @@ def upgrade_me(request):
     # Получили объект текущего пользователя из переменной запроса
     user = request.user
     # Вытащили premium-группу из модели Group Premium)
-    premium_group = Group.objects.get(name='premium')
+    premium_group = Group.objects.get(name='authors')
     # Дальше проверяем, находится ли пользователь в этой группе (вдруг кто-то решил перейти по этому URL, уже имея
     # # Premium)
-    if not request.user.groups.filter(name='premium').exists():
+    if not request.user.groups.filter(name='authors').exists():
         # И если он не в группе — добавляем.
         premium_group.user_set.add(user)
     #     В конце перенаправляем пользователя на корневую страницу,
