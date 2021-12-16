@@ -15,7 +15,8 @@ SECRET_KEY = 'django-insecure-ih%n$n4g-&dyjs0nlo1u^+=6^@q!mtqmka8hy8r+r1lmpb6f5t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Модуль Д5
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -32,6 +33,10 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'newapp',
     'django_filters',
+
+    # новые приложения для модуля Д5
+    'sign',
+    'protect',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +132,8 @@ STATICFILES_DIRS = [
 ]
 
 SITE_ID = 1
+
+
+# для модуля Д5
+LOGIN_URL = 'sign/login/'
+LOGIN_REDIRECT_URL = '/'
