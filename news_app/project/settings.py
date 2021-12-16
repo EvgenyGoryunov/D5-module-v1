@@ -163,7 +163,6 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-
 # Первые два указывают на то, что поле email является обязательным и уникальным, а третий, наоборот, говорит,
 # что username теперь необязательный. Следующий параметр указывает, что аутентификация будет происходить
 # посредством электронной почты. Напоследок мы указываем, что верификация почты отсутствует. Обычно на почту
@@ -174,5 +173,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Чтобы allauth распознал нашу форму как ту, что должна выполняться вместо формы по умолчанию
+ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
 
 # ОБАЗЯТЕЛЬНО СДЕЛАТЬ МИГРАЦИИ ЧТОБЫ ДОБАВИЛИСЬ В АДМИНКУ SOCIAL ACCOUNTS!!!

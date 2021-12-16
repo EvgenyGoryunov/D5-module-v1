@@ -1,12 +1,10 @@
-# импортируем класс-представление для аутентификации LoginView и для выхода из системы — Logout
-# from django.contrib.auth.views import LoginView, LogoutView
-from .views import BaseRegisterView
-# from .views import upgrade_me # импорт для нашей кнопки проверки или добавления польз в группу премиум
-
 # импортируем готовое представление «из коробки» Django на основе класса LoginView
 # класс-представление для аутентификации LoginView, для выхода из системы — Logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
+
+from .views import BaseRegisterView
+from .views import upgrade_me  # импорт для нашей кнопки проверки или добавления польз в группу премиум
 
 # Данные url перенаправляют пользователя в зависимости от его действий в плане регистрации, либо подгружают шаблон
 # для входа в систему (template_name='sign/login.html'), либо шаблон после выхода из
@@ -24,5 +22,5 @@ urlpatterns = [
     # полей при регистрации пользователя
     path('signup/', BaseRegisterView.as_view(template_name='sign/signup.html'), name='signup'),
 
-    #     path('upgrade/', upgrade_me, name='upgrade')  # для кнопки премиум
+    path('upgrade/', upgrade_me, name='upgrade')  # для кнопки премиум
 ]
