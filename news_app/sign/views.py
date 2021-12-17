@@ -17,20 +17,19 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
 
-
 @login_required
-def upgrade_me(request):
-    # Получили объект текущего пользователя из переменной запроса
+def become_author(request):
+    # Получили объект (логин, или тупо имя) текущего пользователя из переменной запроса
     user = request.user
-    # Вытащили premium-группу из модели Group Premium)
-    premium_group = Group.objects.get(name='authors')
+    # Вытащили premium-группу из модели Group
+    authors_group = Group.objects.get(name='authors')
     # Дальше проверяем, находится ли пользователь в этой группе (вдруг кто-то решил перейти по этому URL, уже имея
-    # # Premium)
+    # Premium)
     if not request.user.groups.filter(name='authors').exists():
         # И если он не в группе — добавляем.
-        premium_group.user_set.add(user)
+        authors_group.user_set.add(user)
     #     В конце перенаправляем пользователя на корневую страницу,
-    # # используя метод redirect. Далее берем кнопку с этой функцией
+    # используя метод redirect. Далее берем кнопку с этой функцией
     return redirect('/')
 
 
