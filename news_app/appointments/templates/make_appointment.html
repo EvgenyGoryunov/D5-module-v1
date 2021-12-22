@@ -9,7 +9,7 @@
 
 <h1>Запись на прием</h1>
 
-<form method="post"  enctype="multipart/form-data">
+<form method="post"  >
     {% csrf_token %}
 
     <label for="client_name">Ваше имя</label>
@@ -33,5 +33,6 @@
 </html>
 
 
-<!--убрано из form-->
+<!--убрано из form не понятно что это и зачем-->
+<!--enctype="multipart/form-data"-->
 <!--action="{% url 'make_appointment' %}"-->

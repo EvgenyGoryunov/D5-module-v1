@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from django.core.mail import EmailMultiAlternatives, send_mail
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
 from django.views import View
 
 from .models import Appointment
@@ -23,22 +22,22 @@ class AppointmentView(View):
         )
         appointment.save()
 
-
         # блок для отправки писем из базы данных любому адресату
         # создали объект в БД, и отправляем его поля по почте, то есть сформировать из них само письмо, для удобства
         # имя клиента сделаем темой, выделим ее жирным шрифтом и чтоб показывалось в письме первым, далее идет само
         # сообщение содержащее краткую суть проблемы и в заключении добавить дату записи. И всё это отправлялось на
         # почту любому адресату
+
         send_mail(
             subject=f'{appointment.client_name} {appointment.date.strftime("%Y-%M-%d")}',
             # имя клиента и дата записи будут в теме для удобства
             message=appointment.message,  # сообщение с кратким описанием проблемы
             from_email='factoryskill@yandex.ru',  # почта с которой отправляем письма
-            recipient_list=['ges1987@list.ru'], # список получателей, например, секретарь, врач и т. д.
+            recipient_list=['ges1987@list.ru'],  # список получателей, например, секретарь, врач и т. д.
             fail_silently=False,
         )
 
-
+        return redirect('make_appointment')
         # return redirect - дословно означает, что мы должны сделать после выполнения данной функции (def post)
         # конкретно тут: при переходе по адресу http://127.0.0.1:8000/appointment/ (в урлах проекта настроили), мы
         # отправляем запрос get, активируется функция def get, результатом которой является выдача шаблона (странички)
@@ -46,13 +45,7 @@ class AppointmentView(View):
         # на кнопку, которая данные с нашей формы (с полей) преобразует в строчку и отсылает на сайт, на сервер,
         # который в свою очередь разбирает эту строчку на составляющие, помещает в нашу базу данных в нужные
         # ячейки таблицы (БД). То есть создали объект (=строчка) в нашей таблице (=база данных). В конце, мы просим
-        # опять перейти на данную страницу make_appointment (код ниже) после return
-        return redirect('make_appointment')
-
-
-
-
-
+        # опять перейти на данную страницу make_appointment после return
 
         # получаем наш html
         # html_content = render_to_string(
@@ -61,7 +54,6 @@ class AppointmentView(View):
         #         'appointment': appointment,
         #     }
         # )
-
 
         # msg = EmailMultiAlternatives(
         #     subject=f'{appointment.client_name} {appointment.date.strftime("%Y-%M-%d")}',
